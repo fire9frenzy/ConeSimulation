@@ -1,0 +1,18 @@
+<project name="ConeSim" default="compile" basedir=".">
+	<target name="clean" description="Cleans up project (Removes old build files)">
+		<delete dir="build"/>
+		<delete file="manifest.txt"/>
+	</target>
+	<target name="compile" depends="clean" description="Compile the code into classes (build/classes/)">
+		<mkdir dir="build/classes"/>
+		<javac srcdir="src" destdir="build/classes"/>
+	</target>
+	<target name="jar" depends="compile" description="Bundle classes into a single JAR file (build/jar/)">
+		<mkdir dir="build/jar"/>
+		<jar destfile="build/jar/ConeProductionSim.jar" basedir="build/classes">
+			<manifest>
+				<attribute name="Main-Class" value="FileParser"/>
+			</manifest>
+		</jar>
+	</target>
+</project>
