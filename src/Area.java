@@ -62,6 +62,21 @@ public class Area
 			}
 		}
 
+		double totalPercentage = percetange(80.0, 90.0)/100;
+		double squirellPercentage = percetange(74.0, 89.0)/100;
+		conesEaten = (int)(yearCones * totalPercentage);
+		yearCones = yearCones - conesEaten;
+		int totalSeeds = 0;
+		int nutcrackerCones = (int)(conesEaten*(totalPercentage - squirellPercentage));
+		System.out.println(nutcrackerCones);
+		for(int i =0; i < nutcrackerCones; i++)
+		{
+			totalSeeds += seeds();
+		}
+
+		System.out.println("seeds"+totalSeeds);
+
+
 	}
 
 	public int[] conesProducePerTree()
@@ -80,6 +95,19 @@ public class Area
 			}
 		}
 		return cones;
+	}
+
+
+	private double percetange(double min, double max)
+	{
+		Random random = new Random();
+		return (min + (max - min) * random.nextDouble());
+	}
+
+	private int seeds()
+	{
+		Random random = new Random();
+		return (40 + (80 - 40)*random.nextInt());
 	}
 
 }
