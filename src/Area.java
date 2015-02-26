@@ -117,9 +117,9 @@ public class Area
 			}
 		}
 		return cones;
-
-
 	}
+
+
 
 	public int conesLeft()
 	{
