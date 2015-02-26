@@ -27,4 +27,13 @@ public class Soil
 
 	}
 
+	public int dimension()
+	{
+		return dimension;
+	}	
+
+	public String toString()
+	{
+		return " ";
+	}
 }

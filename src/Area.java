@@ -8,7 +8,6 @@ public class Area
 	private int yearCones = 0;
 	private int conesEaten = 0;
 	private int amountOfTrees = 0;
-
 	//input the dimension in meter square
 	public Area(int dimension, Metapop metapop)
 	{
@@ -62,22 +61,45 @@ public class Area
 			}
 		}
 
-		double totalPercentage = percetange(80.0, 90.0)/100;
-		double squirellPercentage = percetange(74.0, 89.0)/100;
+		double totalPercentage = percentange(80.0, 90.0)/100;
+		double squirellPercentage = percentange(74.0, (totalPercentage*100))/100;
 		conesEaten = (int)(yearCones * totalPercentage);
+		// System.out.println(yearCones);
 		yearCones = yearCones - conesEaten;
 		int totalSeeds = 0;
+		// System.out.println(conesEaten);
 		int nutcrackerCones = (int)(conesEaten*(totalPercentage - squirellPercentage));
-		System.out.println(nutcrackerCones);
+		// System.out.println(nutcrackerCones);
 		for(int i =0; i < nutcrackerCones; i++)
 		{
-			totalSeeds += seeds();
+			// System.out.println(seeds());	
+			totalSeeds += seeds(40,85);
 		}
+		System.out.println(totalSeeds);
+		createCaches(totalSeeds);
 
-		System.out.println("seeds"+totalSeeds);
+		// System.out.println("seeds"+totalSeeds);
 
 
 	}
+
+	private void createCaches(int seeds)
+	{
+		Random random = new Random();
+		while(seeds > 0)
+		{
+			int x = random.nextInt(dimension);
+			int y = random.nextInt(dimension);
+			
+			int seed= seeds(1,5);
+			double perc = percentange(0.0,100.0);
+			if((!area[x][y].containsPine()) && (perc <= (20 * (double)(dimension*(new Soil().dimension()))/1000)) )
+			{
+				area[x][y] = new Cache(seed);
+				seeds =- seed;
+			}
+		}	
+}
 
 	public int[] conesProducePerTree()
 	{
@@ -95,19 +117,42 @@ public class Area
 			}
 		}
 		return cones;
+
+
+	}
+
+	public int conesLeft()
+	{
+		return yearCones;
 	}
 
 
-	private double percetange(double min, double max)
+	private double percentange(double min, double max)
 	{
 		Random random = new Random();
 		return (min + (max - min) * random.nextDouble());
 	}
 
-	private int seeds()
+	private int seeds(int min, int max)
 	{
 		Random random = new Random();
-		return (40 + (80 - 40)*random.nextInt());
+		return (random.nextInt((max - min) + 1) + min);
 	}
 
+	public String toString()
+	{
+		String temp = "dimension for each square is"+(new Soil()).dimension();
+		temp += "\n";
+		for(int i =0; i < area.length; i++)
+		{
+			for(int j=0; j < area[i].length; j++)
+			{
+				temp +="| "+area[i][j]+" ";
+				// table[i][j] = new Block(input[counter]);
+				// counter++;
+			}
+			temp += "|\n";
+		}
+		return temp;
+	}
 }

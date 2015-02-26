@@ -1,6 +1,7 @@
 public class LimberPine extends Soil
 {
 	private int cones;
+	private int conesEaten;
 	public LimberPine()
 	{
 		
@@ -29,6 +30,11 @@ public class LimberPine extends Soil
 	{
 		super.amountCones();
 		return cones;
+	}
+
+	public String toString()
+	{
+		return "T";
 	}
 
 }

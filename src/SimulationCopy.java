@@ -5,7 +5,7 @@ public class SimulationCopy
 	public static void main(String args[])
 	{
 		int dimensions = 1000; 		// default 1Km
-		int numOfTrees = 50;		// default fiddy
+		int numOfTrees = 150;		// default fiddy
 		String location = "PH";		// default PH
 		int maxCones = 1000000000; 	// default no limit
 		int years = 1;				// default one year
@@ -78,6 +78,7 @@ public class SimulationCopy
 				{
 					writer.println("Simulation" + s + "\t"+numbers[j]);
 				}
+				writer.println(area);
 			}
 			writer.close();
 		}

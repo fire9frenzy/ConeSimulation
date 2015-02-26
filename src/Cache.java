@@ -28,4 +28,9 @@ public class Cache extends Soil
 		return seedling;
 	}
 
+
+	public String toString()
+	{
+		return "C";
+	}
 }
