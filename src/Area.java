@@ -42,12 +42,13 @@ public class Area
 				x = random.nextInt(dimension);
 				y = random.nextInt(dimension);
 			}
-			area[x][y] = new LimberPine();
+			area[x][y] = new LimberPine(100);
 		}
 	}
 
 	public void Year(boolean mast)
 	{
+		checkProgress();
 		yearCones = 0;
 		for(int i = 0; i < dimension; i++)
 		{
@@ -75,8 +76,10 @@ public class Area
 			// System.out.println(seeds());	
 			totalSeeds += seeds(40,85);
 		}
-		System.out.println(totalSeeds);
+		// System.out.println(totalSeeds);
 		createCaches(totalSeeds);
+		eatCaches();
+		incrementAge();
 
 		// System.out.println("seeds"+totalSeeds);
 
@@ -86,20 +89,56 @@ public class Area
 	private void createCaches(int seeds)
 	{
 		Random random = new Random();
+		random.setSeed(-1);
 		while(seeds > 0)
 		{
 			int x = random.nextInt(dimension);
 			int y = random.nextInt(dimension);
 			
 			int seed= seeds(1,5);
+			// System.out.println(seed);
 			double perc = percentange(0.0,100.0);
-			if((!area[x][y].containsPine()) && (perc <= (20 * (double)(dimension*(new Soil().dimension()))/1000)) )
+			if((!area[x][y].containsPine()))
 			{
 				area[x][y] = new Cache(seed);
-				seeds =- seed;
+				seeds -= seed;
 			}
+			// System.out.println(seeds);
 		}	
-}
+	}
+
+	private void incrementAge()
+	{
+		for(int i =0; i < area.length; i++)
+		{
+			for(int j =0; j < area[i].length; j++)
+			{
+				if(area[i][j].isCache() || area[i][j].containsPine() || area[i][j].isSeedling())
+				{
+					area[i][j].incrementAge();
+				}
+			}
+		}
+	}
+
+	private void eatCaches()
+	{
+		for(int i =0; i < area.length; i++)
+		{
+			for(int j =0; j < area[i].length; j++)
+			{
+				if(area[i][j].isCache() && (percentange(0.0,100.0) <= 75.0))
+				{
+					int seedEaten = seeds(1,area[i][j].getSeed());
+					area[i][j].nutCrackerFeed(seedEaten);
+					if(!area[i][j].hasSeeds())
+					{
+						area[i][j] = new Soil();
+					}
+				}
+			}
+		}
+	}
 
 	public int[] conesProducePerTree()
 	{
@@ -154,5 +193,41 @@ public class Area
 			temp += "|\n";
 		}
 		return temp;
+	}
+
+	private void checkProgress()
+	{
+		for(int i =0; i < area.length; i++)
+		{
+			for(int j =0; j < area[i].length; j++)
+			{
+				if(area[i][j].isCache())
+				{
+					if(area[i][j].age() > 1)
+					{
+						if(area[i][j].germinated())
+						{
+							area[i][j]= new Seedling(area[i][j].getSeed());
+						}
+					}
+					if(area[i][j].age() >= 2 )
+					{
+						area[i][j]= new Soil();
+					}
+				}
+				if(area[i][j].isSeedling())
+				{
+					if(!area[i][j].survived())
+					{
+						area[i][j]= new Soil();
+					}
+					if(area[i][j].mature())
+					{
+						area[i][j] = new LimberPine(area[i][j].age());
+					}
+				}
+
+			}
+		}
 	}
 }

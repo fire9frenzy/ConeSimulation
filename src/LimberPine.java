@@ -2,9 +2,10 @@ public class LimberPine extends Soil
 {
 	private int cones;
 	private int conesEaten;
-	public LimberPine()
+	private int age;
+	public LimberPine(int age)
 	{
-		
+		this.age = age;
 	}
 
 	public boolean containsPine()
@@ -35,6 +36,16 @@ public class LimberPine extends Soil
 	public String toString()
 	{
 		return "T";
+	}
+
+	public void incrementAge()
+	{
+		age++;
+	}
+
+	public int age()
+	{
+		return age;
 	}
 
 }

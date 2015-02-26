@@ -1,3 +1,4 @@
+import java.util.*;
 public class Soil
 {
 	private final int dimension = 4; //1 meter per 1 meter
@@ -36,4 +37,53 @@ public class Soil
 	{
 		return " ";
 	}
+
+	public boolean isCache()
+	{
+		return false;
+	}
+
+	public int getSeed()
+	{
+		return 0;
+	}
+
+	public void nutCrackerFeed(int seed)
+	{
+	} 
+
+	public boolean hasSeeds()
+	{
+		return false;
+	}
+
+	public void incrementAge()
+	{
+	}
+
+	public boolean isSeedling()
+	{
+		return false;
+	}
+
+	public boolean germinated()
+	{
+		return false;
+	}
+
+	public int age()
+	{
+		return 0;
+	}
+
+	public boolean survived()
+	{
+		return false;
+	}
+
+	public boolean mature()
+	{
+		return false;
+	}
+
 }
