@@ -1,3 +1,4 @@
+// Main function
 import java.io.*;
 
 public class Simulation
