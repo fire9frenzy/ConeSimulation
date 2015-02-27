@@ -16,7 +16,7 @@ public class FileParser
 			System.out.println("File not found");
 		}
 	}
-	public Metapop getDataByMetaPop(String name)
+	public Metapop getDataByMetaPop(String name, int maxCones)
 	{
 		Metapop data = new Metapop(name);
 		while(sc.hasNextLine())
@@ -30,7 +30,10 @@ public class FileParser
 					if (l[6].equals("0"))
 					{
 						// System.out.println(l[5]);
-						data.addCones(Integer.valueOf(l[5]));
+						if (Integer.valueOf(l[5]) > maxCones)
+							data.addCones(maxCones);
+						else
+							data.addCones(Integer.valueOf(l[5]));
 					}
 					else
 					{

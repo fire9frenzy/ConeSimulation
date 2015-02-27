@@ -146,7 +146,7 @@ public class Area
 
 	public int[] conesProducePerTree()
 	{
-		int cones[] = new int[amountOfTrees];
+		int cones[] = new int[getTreeCount()];
 		int counter  = 0;
 		for(int i = 0; i < dimension; i++)
 		{

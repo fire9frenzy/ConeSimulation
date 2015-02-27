@@ -8,7 +8,7 @@ public class Simulation
 		int numOfTrees = 150;		// default fiddy
 		String location = "PH";		// default PH
 		int maxCones = 1000000000; 	// default no limit
-		int years =60;			// default one year
+		int years = 60;			// default one year
 		boolean variable = false;	// default constant cycle
 		int mastRate = 3;			// default 3 years
 		int density = -1;
@@ -77,7 +77,7 @@ public class Simulation
 							"");
 
 		FileParser info = new FileParser("../Data/coneData.txt");
-		Area area = new Area(dimensions, info.getDataByMetaPop(location));
+		Area area = new Area(dimensions, info.getDataByMetaPop(location, maxCones));
 		info.close();
 		area.setPineTrees(numOfTrees);
 		try
@@ -143,7 +143,7 @@ public class Simulation
 				{
 					int[] numbers = area.conesProducePerTree();
 
-					for(int j = 0; j < numOfTrees; ++j)						// should get end value from area object
+					for(int j = 0; j < area.getTreeCount(); ++j)						// should get end value from area object
 					{
 						// writer.println("\tsource\tyear\ttrees\tconesProd\tconesEaten\tcaches\tseedlings");
 						// index
