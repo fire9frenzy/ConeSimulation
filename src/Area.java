@@ -48,7 +48,7 @@ public class Area
 
 	public void Year(boolean mast)
 	{
-		incrementAge();
+		// incrementAge();
 		checkProgress();
 		yearCones = 0;
 		for(int i = 0; i < dimension; i++)
@@ -78,7 +78,7 @@ public class Area
 		}
 		// System.out.println(totalSeeds);
 		createCaches(totalSeeds);
-		System.out.println("asd");
+		// System.out.println("asd");
 		// System.out.println(getCacheCount());
 		eatCaches();
 		// System.out.println(getCacheCount());

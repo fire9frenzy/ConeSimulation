@@ -4,7 +4,7 @@ public class Simulation
 {
 	public static void main(String args[])
 	{
-		int dimensions = 1000; 		// default 1Km
+		int dimensions = 2000; 		// default 1Km
 		int numOfTrees = 150;		// default fiddy
 		String location = "PH";		// default PH
 		int maxCones = 1000000000; 	// default no limit
@@ -94,7 +94,7 @@ public class Simulation
 			int index = 0;
 			for(int i = 0; i < years; ++i)
 			{
-				System.out.println("WOrking on year: " + (i + 1));
+				// System.out.println("WOrking on year: " + (i + 1));
 				String s = "";
 				if (variable)
 				{
