@@ -77,8 +77,11 @@ public class Area
 		}
 		// System.out.println(totalSeeds);
 		createCaches(totalSeeds);
+		// System.out.println(getCacheCount());
 		eatCaches();
+		// System.out.println(getCacheCount());
 		incrementAge();
+		// System.out.println(getCacheCount());
 
 		// System.out.println("seeds"+totalSeeds);
 
@@ -97,7 +100,7 @@ public class Area
 			int seed= seeds(1,5);
 			// System.out.println(seed);
 			double perc = percentange(0.0,100.0);
-			if((!area[x][y].containsPine()))
+			if((!area[x][y].containsPine()) && (!area[x][y].isCache()) && (!area[x][y].isSeedling()))
 			{
 				area[x][y] = new Cache(seed);
 				seeds -= seed;
