@@ -48,6 +48,7 @@ public class Area
 
 	public void Year(boolean mast)
 	{
+		incrementAge();
 		checkProgress();
 		yearCones = 0;
 		for(int i = 0; i < dimension; i++)
@@ -131,7 +132,7 @@ public class Area
 			{
 				if(area[i][j].isCache() && (percentange(0.0,100.0) <= 75.0))
 				{
-					int seedEaten = seeds(1,area[i][j].getSeed());
+					int seedEaten = seeds(0,area[i][j].getSeed());
 					area[i][j].nutCrackerFeed(seedEaten);
 					if(!area[i][j].hasSeeds())
 					{
@@ -218,13 +219,17 @@ public class Area
 					}
 				}
 				if(area[i][j].isSeedling())
-				{
-					if(!area[i][j].survived())
+				{	
+					if((area[i][j].age()%3 == 0) && (area[i][j].age() != 0)) 
 					{
-						area[i][j]= new Soil();
-					}
+						if(!area[i][j].survived())
+						{
+							area[i][j]= new Soil();
+						}		
+					}	
 					if(area[i][j].mature())
 					{
+						// System.out.println("asd");
 						area[i][j] = new LimberPine(area[i][j].age());
 					}
 				}
@@ -232,6 +237,7 @@ public class Area
 			}
 		}
 	}
+	
 	public int getTreeCount()
 	{
 		int count = 0;

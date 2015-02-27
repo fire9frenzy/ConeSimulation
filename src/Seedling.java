@@ -10,7 +10,7 @@ public class Seedling extends Soil
 		seedFrom = seeds;
 	}
 
-	public void increaseAge()
+	public void incrementAge()
 	{
 		age++;
 	}
@@ -32,6 +32,7 @@ public class Seedling extends Soil
 
 	public boolean survived()
 	{
+		// System.out.println(percentange(1.0,100.0) <= chances());
 		return (percentange(1.0,100.0) <= chances());
 	}
 
@@ -43,28 +44,46 @@ public class Seedling extends Soil
 
 	private double chances()
 	{
+		// if (seedFrom == 1) // one
+		// {
+		// 	return (0.2 + ((age - 1) * 0.25)) * 100;
+		// }
+		// else if (seedFrom >= 3) // 3 and less
+		// {
+			
+		// }
+		// else // more the 3
+		// {
 
-		if(age < 3)
+		// }
+		// System.out.println("Hello");
+		if(age <= 3)
 		{
 			if(seedFrom < 3)
 			{
 				return 2.0;
 			}
-			else if(seedFrom< 5)
+			else if(seedFrom < 5)
 			{
 				return 20.0;
 			}
 			return 35.0;
 		}
+		int factor = 0;
+		factor = age / 3;
 		if(seedFrom < 3)
 		{
-			return (57.0 + (age-3));
+			// @ 6 years 57 @9 75
+			return (57.0 + ((factor - 2) * 25.0));
+			// return (57.0 * (age-2));
 		}
 		else if(seedFrom < 5)
 		{
-			return (69.0+(age-3));
+			return (69.0 + ((factor - 2) * 25.0));
 		}
-		return (79.0 + (age-3));
+		return (79.0 + ((factor - 2) * 25.0));
+
+
 	}
 
 

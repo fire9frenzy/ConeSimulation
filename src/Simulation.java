@@ -8,7 +8,7 @@ public class Simulation
 		int numOfTrees = 150;		// default fiddy
 		String location = "PH";		// default PH
 		int maxCones = 1000000000; 	// default no limit
-		int years = 6;				// default one year
+		int years =60;			// default one year
 		boolean variable = false;	// default constant cycle
 		int mastRate = 3;			// default 3 years
 		int density = -1;
@@ -94,6 +94,7 @@ public class Simulation
 			int index = 0;
 			for(int i = 0; i < years; ++i)
 			{
+				System.out.println("WOrking on year: " + (i + 1));
 				String s = "";
 				if (variable)
 				{
