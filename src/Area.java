@@ -230,4 +230,57 @@ public class Area
 			}
 		}
 	}
+	public int getTreeCount()
+	{
+		int count = 0;
+		for(int i = 0; i < area.length; ++i)
+		{
+			for(int j = 0; j < area[i].length; ++j)
+			{
+				if (area[i][j].containsPine())
+				{
+					++count;
+				}
+			}
+		}
+		return count;
+	}
+	public int getCacheCount()
+	{
+		int count = 0;
+		for(int i = 0; i < area.length; ++i)
+		{
+			for(int j = 0; j < area[i].length; ++j)
+			{
+				if (area[i][j].isCache())
+				{
+					++count;
+				}
+			}
+		}
+		return count;
+	}
+	public int getSeedlingCount()
+	{
+		int count = 0;
+		for(int i = 0; i < area.length; ++i)
+		{
+			for(int j = 0; j < area[i].length; ++j)
+			{
+				if (area[i][j].isSeedling())
+				{
+					++count;
+				}
+			}
+		}
+		return count;
+	}
+	public int getYearCones()
+	{
+		return yearCones;
+	}
+	public int getYearConesEaten()
+	{
+		return conesEaten;
+	}
 }

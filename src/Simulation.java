@@ -69,11 +69,13 @@ public class Simulation
 		area.setPineTrees(numOfTrees);
 		try
 		{
-			PrintWriter writer = new PrintWriter("test.txt", "UTF-8");
+			PrintWriter writer = new PrintWriter("Data.txt", "UTF-8");
+			writer.println("\tsource\tyear\ttrees\tconesProd\tconesEaten\tcaches\tseedlings");
 			int lastMastYear = 0;
 			boolean needReset = true;
 			int currentMastRate = mastRate;
 			Random rand = new Random();
+			int index = 0;
 			for(int i = 0; i < years; ++i)
 			{
 				String s = "";
@@ -102,10 +104,46 @@ public class Simulation
 				else
 					area.Year(false);
 				int[] numbers = area.conesProducePerTree();
-				for(int j = 0; j < numOfTrees; ++j)						// should get end value from area object
-				{
-					writer.println("Simulation" + s + "\t"+numbers[j]);
-				}
+
+				// writer.println("\tsource\tyear\ttrees\tconesProd\tconesEaten\tcaches\tseedlings");
+				// index
+				writer.print((index++) + "\t");
+				// source
+				writer.print("Simulation" + "\t");
+				// year
+				writer.print((i + 1) + "\t");
+				// num of trees
+				writer.print(area.getTreeCount() + "\t");
+				// conesprod
+				writer.print(area.getYearCones() + "\t");
+				// cones eaten
+				writer.print(area.getYearConesEaten() + "\t");
+				// caches
+				writer.print(area.getCacheCount() + "\t");
+				// seedlings
+				writer.println(area.getSeedlingCount());
+
+				// for(int j = 0; j < numOfTrees; ++j)						// should get end value from area object
+				// {
+				// 	// writer.println("\tsource\tyear\ttrees\tconesProd\tconesEaten\tcaches\tseedlings");
+				// 	// index
+				// 	writer.print((index++) + "\t");
+				// 	// source
+				// 	writer.print("Simulation" + "\t");
+				// 	// year
+				// 	writer.print((i + 1) + "\t");
+				// 	// num of trees
+				// 	writer.print(area.getTreeCount() + "\t");
+				// 	// conesprod
+				// 	writer.print(numbers[j] + "\t");
+				// 	// cones eaten
+
+				// 	// caches
+				// 	writer.print(area.getCacheCount() + "\t");
+				// 	// seedlings
+				// 	writer.println(area.getSeedlingCount());
+				// 	// need to write num of trees, cones produced, cones eaten, caches, seedlings year num
+				// }
 			}
 			writer.close();
 		}
