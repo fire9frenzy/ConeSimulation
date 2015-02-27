@@ -78,6 +78,7 @@ public class Area
 		}
 		// System.out.println(totalSeeds);
 		createCaches(totalSeeds);
+		System.out.println("asd");
 		// System.out.println(getCacheCount());
 		eatCaches();
 		// System.out.println(getCacheCount());
@@ -104,8 +105,8 @@ public class Area
 			if((!area[x][y].containsPine()) && (!area[x][y].isCache()) && (!area[x][y].isSeedling()))
 			{
 				area[x][y] = new Cache(seed);
-				seeds -= seed;
 			}
+			seeds -= seed;
 			// System.out.println(seeds);
 		}	
 	}
@@ -237,7 +238,7 @@ public class Area
 			}
 		}
 	}
-	
+
 	public int getTreeCount()
 	{
 		int count = 0;
