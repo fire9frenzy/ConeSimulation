@@ -83,6 +83,31 @@ public class Seedling extends Soil
 		}
 		return (79.0 + ((factor - 2) * 25.0));
 
+		// if(age <= 3)
+		// {
+		// 	if(seedFrom < 3)
+		// 	{
+		// 		return 2.0;
+		// 	}
+		// 	else if(seedFrom < 5)
+		// 	{
+		// 		return 20.0;
+		// 	}
+		// 	return 35.0;
+		// }
+		// int factor = 0;
+		// factor = age / 3;
+		// if(seedFrom < 3)
+		// {
+		// 	// @ 6 years 57 @9 75
+		// 	return (57.0);
+		// 	// return (57.0 * (age-2));
+		// }
+		// else if(seedFrom < 5)
+		// {
+		// 	return (69.0 );
+		// }
+		// return (79.0);
 
 	}
 
