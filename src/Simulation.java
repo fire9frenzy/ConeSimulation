@@ -84,7 +84,7 @@ public class Simulation
 		{
 			PrintWriter writer = new PrintWriter(fileName, "UTF-8");
 			if (yearlyInfo)
-				writer.println("\tsource\tyear\ttrees\tconesProd\tconesEaten\tcaches\tseedlings");
+				writer.println("\tsource\tyear\tmastYear\ttrees\tconesProd\tconesEaten\tconeEscape\tcaches\tseedlings");
 			else
 				writer.println("\tsource\tconesProd");
 			int lastMastYear = 0;
@@ -96,30 +96,30 @@ public class Simulation
 			{
 				// System.out.println("WOrking on year: " + (i + 1));
 				String s = "";
-				if (variable)
+				boolean isMastYear = false;
+				if (variable && needReset)
 				{
-					if (needReset)
-					{
-						// set mast year to average +- 1 year
-						double r = rand.nextDouble();
-						if (r < 0.75)
-							currentMastRate = mastRate + 1;
-						if (r > 0.25)
-							currentMastRate = mastRate - 1;
-						else
-							currentMastRate = mastRate;
-						needReset = false;
-					}
+					// System.out.println("Reseting Mast Year: " + i + ", " + lastMastYear);
+					// set mast year to average +- 1 year
+					double r = rand.nextDouble();
+					if (r < 0.75)
+						currentMastRate = mastRate + 1;
+					if (r > 0.25)
+						currentMastRate = mastRate - 1;
+					else
+						currentMastRate = mastRate;
+					needReset = false;
 				}
 				else if (i - lastMastYear == currentMastRate)
 				{
+					// System.out.println("Is mast year");
 					lastMastYear = i + 1;
-					area.Year(true);
+					isMastYear = true;
 					s = "M";
 					needReset = true;
 				}
-				else
-					area.Year(false);
+
+				area.Year(isMastYear);
 				if (yearlyInfo) {
 					// writer.println("\tsource\tyear\ttrees\tconesProd\tconesEaten\tcaches\tseedlings");
 					// index
@@ -128,12 +128,16 @@ public class Simulation
 					writer.print("Simulation" + "\t");
 					// year
 					writer.print((i + 1) + "\t");
+					// isMastYear
+					writer.print(isMastYear + "\t");
 					// num of trees
 					writer.print(area.getTreeCount() + "\t");
 					// conesprod
 					writer.print(area.getYearCones() + "\t");
 					// cones eaten
 					writer.print(area.getYearConesEaten() + "\t");
+					// coneEscape
+					writer.print(1 - ((double)area.getYearConesEaten() / (double)area.getYearCones()) + "\t");
 					// caches
 					writer.print(area.getCacheCount() + "\t");
 					// seedlings
