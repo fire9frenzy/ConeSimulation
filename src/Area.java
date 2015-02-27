@@ -61,7 +61,6 @@ public class Area
 				}
 			}
 		}
-
 		double totalPercentage = percentange(80.0, 90.0)/100;
 		double squirellPercentage = percentange(74.0, (totalPercentage*100))/100;
 		conesEaten = (int)(yearCones * totalPercentage);

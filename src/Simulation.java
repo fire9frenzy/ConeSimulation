@@ -12,6 +12,8 @@ public class Simulation
 		boolean variable = false;	// default constant cycle
 		int mastRate = 3;			// default 3 years
 		int density = -1;
+		String fileName = "Data.txt";
+		boolean yearlyInfo = true;
 		for (int i = 0; i < args.length; ++i)
 		{
 			args[i] = args[i].toLowerCase();
@@ -46,6 +48,17 @@ public class Simulation
 				case "-d":
 					density = Integer.valueOf(args[++i]);
 					break;
+				case "-o":
+					if (args[i + 1].equals("year"))
+						yearlyInfo = true;
+					else if (args[++i].equals("tree"))
+						yearlyInfo = false;
+					else
+						System.out.println("Unknown output type: using defualts");
+					break;
+				case "-f":
+					fileName = args[++i];
+					break;
 				case "-h":
 					printHelp();
 					System.exit(0);
@@ -69,8 +82,11 @@ public class Simulation
 		area.setPineTrees(numOfTrees);
 		try
 		{
-			PrintWriter writer = new PrintWriter("Data.txt", "UTF-8");
-			writer.println("\tsource\tyear\ttrees\tconesProd\tconesEaten\tcaches\tseedlings");
+			PrintWriter writer = new PrintWriter(fileName, "UTF-8");
+			if (yearlyInfo)
+				writer.println("\tsource\tyear\ttrees\tconesProd\tconesEaten\tcaches\tseedlings");
+			else
+				writer.println("\tsource\tconesProd");
 			int lastMastYear = 0;
 			boolean needReset = true;
 			int currentMastRate = mastRate;
@@ -103,47 +119,51 @@ public class Simulation
 				}
 				else
 					area.Year(false);
-				int[] numbers = area.conesProducePerTree();
+				if (yearlyInfo) {
+					// writer.println("\tsource\tyear\ttrees\tconesProd\tconesEaten\tcaches\tseedlings");
+					// index
+					writer.print((index++) + "\t");
+					// source
+					writer.print("Simulation" + "\t");
+					// year
+					writer.print((i + 1) + "\t");
+					// num of trees
+					writer.print(area.getTreeCount() + "\t");
+					// conesprod
+					writer.print(area.getYearCones() + "\t");
+					// cones eaten
+					writer.print(area.getYearConesEaten() + "\t");
+					// caches
+					writer.print(area.getCacheCount() + "\t");
+					// seedlings
+					writer.println(area.getSeedlingCount());
+				}
+				else
+				{
+					int[] numbers = area.conesProducePerTree();
 
-				// writer.println("\tsource\tyear\ttrees\tconesProd\tconesEaten\tcaches\tseedlings");
-				// index
-				writer.print((index++) + "\t");
-				// source
-				writer.print("Simulation" + "\t");
-				// year
-				writer.print((i + 1) + "\t");
-				// num of trees
-				writer.print(area.getTreeCount() + "\t");
-				// conesprod
-				writer.print(area.getYearCones() + "\t");
-				// cones eaten
-				writer.print(area.getYearConesEaten() + "\t");
-				// caches
-				writer.print(area.getCacheCount() + "\t");
-				// seedlings
-				writer.println(area.getSeedlingCount());
+					for(int j = 0; j < numOfTrees; ++j)						// should get end value from area object
+					{
+						// writer.println("\tsource\tyear\ttrees\tconesProd\tconesEaten\tcaches\tseedlings");
+						// index
+						writer.print((index++) + "\t");
+						// source
+						writer.print("Simulation" + "\t");
+						// year
+						// writer.print((i + 1) + "\t");
+						// num of trees
+						// writer.print(area.getTreeCount() + "\t");
+						// conesprod
+						writer.print(numbers[j] + "\n");
+						// cones eaten
 
-				// for(int j = 0; j < numOfTrees; ++j)						// should get end value from area object
-				// {
-				// 	// writer.println("\tsource\tyear\ttrees\tconesProd\tconesEaten\tcaches\tseedlings");
-				// 	// index
-				// 	writer.print((index++) + "\t");
-				// 	// source
-				// 	writer.print("Simulation" + "\t");
-				// 	// year
-				// 	writer.print((i + 1) + "\t");
-				// 	// num of trees
-				// 	writer.print(area.getTreeCount() + "\t");
-				// 	// conesprod
-				// 	writer.print(numbers[j] + "\t");
-				// 	// cones eaten
-
-				// 	// caches
-				// 	writer.print(area.getCacheCount() + "\t");
-				// 	// seedlings
-				// 	writer.println(area.getSeedlingCount());
-				// 	// need to write num of trees, cones produced, cones eaten, caches, seedlings year num
-				// }
+						// caches
+						// writer.print(area.getCacheCount() + "\t");
+						// seedlings
+						// writer.println(area.getSeedlingCount());
+						// need to write num of trees, cones produced, cones eaten, caches, seedlings year num
+					}
+				}
 			}
 			writer.close();
 		}
@@ -154,12 +174,15 @@ public class Simulation
 	}
 	public static void printHelp()
 	{
-		System.out.println("-S num\n the size of the simulated area in kilometers squared.");
-		System.out.println("-T num\n the number of trees in the simulated area");
-		System.out.println("-L str\n either 'PH' or 'KP' determines which data to uses for cone production");
-		System.out.println("-M num\n the max number of cones a tree can produce");
-		System.out.println("-Y num\n the total years the simulation will run for");
-		System.out.println("-I str num\n either 'fixed' or 'var' and the average number of years between mast years");
-		System.out.println("-D num\n three density in trees/km^2");
+		System.out.println("\nOption input\n   description\n");
+		System.out.println("-S int\n   the size of the simulated area in kilometers squared.\n");
+		System.out.println("-T int\n   the number of trees in the simulated area\n");
+		System.out.println("-L str\n   {PH|KP} determines which data to uses for cone production\n");
+		System.out.println("-M int\n   the max number of cones a tree can produce\n");
+		System.out.println("-Y int\n   the total years the simulation will run for\n");
+		System.out.println("-I str int\n   either 'fixed' or 'var' and the average number of years between mast years\n");
+		System.out.println("-D int\n   three density in trees/km^2\n");
+		System.out.println("-O str\n   {tree|year} tree gives info about trees. year gives info about each year\n");
+		System.out.println("-F str\n   file name including suffix\n");
 	}
 }
