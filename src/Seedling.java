@@ -58,14 +58,13 @@ public class Seedling extends Soil
 		}
 		if(seedFrom < 3)
 		{
-			return 57.0;
+			return (57.0 + (age-3));
 		}
 		else if(seedFrom < 5)
 		{
-			return 69.0;
+			return (69.0+(age-3));
 		}
-
-		return 79.0;
+		return (79.0 + (age-3));
 	}
 
 
