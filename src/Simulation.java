@@ -181,14 +181,14 @@ public class Simulation
 	public static void printHelp()
 	{
 		System.out.println("\nOption input\n   description\n");
-		System.out.println("-S int\n   the size of the simulated area in kilometers squared.\n");
-		System.out.println("-T int\n   the number of trees in the simulated area\n");
-		System.out.println("-L str\n   {PH|KP} determines which data to uses for cone production\n");
-		System.out.println("-M int\n   the max number of cones a tree can produce\n");
-		System.out.println("-Y int\n   the total years the simulation will run for\n");
-		System.out.println("-I str int\n   either 'fixed' or 'var' and the average number of years between mast years\n");
-		System.out.println("-D int\n   three density in trees/km^2\n");
-		System.out.println("-O str\n   {tree|year} tree gives info about trees. year gives info about each year\n");
-		System.out.println("-F str\n   file name including suffix\n");
+		System.out.println("-S int --default 2km\n   the size of the simulated area in kilometers squared.\n");
+		System.out.println("-T int --default 150\n   the number of trees in the simulated area\n");
+		System.out.println("-L str --default PH\n   {PH|KP} determines which data to uses for cone production\n");
+		System.out.println("-M int --default no limit\n   the max number of cones a tree can produce\n");
+		System.out.println("-Y int --default 1\n   the total years the simulation will run for\n");
+		System.out.println("-I str int --default fixed 3\n   either 'fixed' or 'var' and the average number of years between mast years\n");
+		System.out.println("-D int --default not set\n   three density in trees/km^2\n");
+		System.out.println("-O str --default year\n   {tree|year} tree gives info about trees. year gives info about each year\n");
+		System.out.println("-F str --default Data.txt\n   file name including suffix\n");
 	}
 }
