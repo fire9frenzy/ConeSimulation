@@ -68,6 +68,7 @@ public class Simulation
 		if (density > 0)
 			numOfTrees = (density * (dimensions / 1000));
 		// print off current simulation parameters
+		// add pound
 		System.out.println("Simulation Parameters" + 
 							"\n  Area:      " + (dimensions / 1000) + "km^2" +
 							"\n  Trees:     " + numOfTrees +
@@ -84,9 +85,9 @@ public class Simulation
 		{
 			PrintWriter writer = new PrintWriter(fileName, "UTF-8");
 			if (yearlyInfo)
-				writer.println("\tsource\tyear\tmastYear\ttrees\tconesProd\tconesEaten\tconeEscape\tcaches\tseedlings");
+				writer.println("source\tyear\tmastYear\ttrees\tconesProd\tconesEaten\tconeEscape\tcaches\tseedlings");
 			else
-				writer.println("\tsource\tconesProd");
+				writer.println("source\tconesProd");
 			int lastMastYear = 0;
 			boolean needReset = true;
 			int currentMastRate = mastRate;
