@@ -10,7 +10,7 @@ public class Simulation
 		int maxTreesPerHa = 500;
 		String location = "PH";		// default PH
 		int maxCones = 1000000000; 	// default no limit
-		int years = 60;			// default one year
+		int years = 40;			// default one year
 		boolean variable = false;	// default constant cycle
 		int mastRate = 3;			// default 3 years
 		int density = -1;
@@ -175,14 +175,6 @@ public class Simulation
 				area.incrementAge();
 			}
 			writer.close();
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		try
-		{
-			Runtime.getRuntime().exec("Rscript ../ConeGraphing.R"); 
 		}
 		catch(Exception e)
 		{
