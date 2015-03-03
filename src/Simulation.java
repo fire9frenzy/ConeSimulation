@@ -180,6 +180,15 @@ public class Simulation
 		{
 			e.printStackTrace();
 		}
+		try
+		{
+			Runtime.getRuntime().exec("Rscript ../ConeGraphing.R"); 
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
 	}
 	public static void printHelp()
 	{
