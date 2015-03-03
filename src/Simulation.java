@@ -256,7 +256,7 @@ public class Simulation
 
 	}
 	public static void printHelp()
-	{
+	{System.out.println("-N int --default 100 \n   the boundry for nutcrackers appearing\n");
 		System.out.println("\nOption input\n   description\n");
 		System.out.println("-A int --default 1ha\n   the size of the simulated area in ha. squared.\n");
 		// System.out.println("-T int --default 150\n   the number of trees in the simulated area\n");
@@ -267,9 +267,9 @@ public class Simulation
 		System.out.println("-D int --default not set\n   three density in trees/ha^2\n");
 		System.out.println("-O str --default year\n   {tree|year} tree gives info about trees. year gives info about each year\n");
 		System.out.println("-F str --default Data.txt\n   file name including suffix\n");
-		System.out.println("-S int int --default 80 90\n   low then high boundry for how much squirrels eat\n");
+		System.out.println("-S int int --default 74 89\n   low then high boundry for how much squirrels eat\n");
 		System.out.println("-C int int --default 30 40\n   the boundry for seeds from each cone\n");
-		System.out.println("-N int --default 100 \n   the boundry for nutcrackers appearing\n");
+		System.out.println("-N int --default 1000 \n   the boundry for nutcrackers appearing\n");
 		System.out.println("-R \n   including -r will attempt to run rscripts to generate graphs\n");
 	}
 }
