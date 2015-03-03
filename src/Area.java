@@ -74,8 +74,14 @@ public class Area
 
 		for(int i = 0; i < iterations; i++)
 		{
-
+			// Area tempArea = Area(this);
 		}
+
+		if((yearCones-conesEaten) >= coneTreshold)
+		{
+			nutCrackerBehavior((double)((double)(tempConesEaten)/(double)(tempCones)));
+		}
+		eatCaches();
 	}
 
 	public void runYear(boolean mast)
@@ -99,10 +105,6 @@ public class Area
 			double totalPercentage = percentange(45.0, 60.0)/100;
 			double squirellPercentage = percentange(40.0, (totalPercentage*100))/100;
 			conesEaten = (int)(yearCones * totalPercentage);
-			if((yearCones-conesEaten) >= coneTreshold)
-			{
-				nutCrackerBehavior(totalPercentage);
-			}
 			// System.out.println(yearCones);
 		}
 		else
@@ -120,12 +122,7 @@ public class Area
 			}
 			double totalPercentage = percentange(minSquirrel, maxSquirrel)/100;
 			conesEaten = (int)(yearCones * totalPercentage);
-			if((yearCones-conesEaten) >= coneTreshold)
-			{
-				nutCrackerBehavior(totalPercentage);
-			}
 		}
-		eatCaches();
 	}
 
 	private void nutCrackerBehavior(double squirrellPercentage)
