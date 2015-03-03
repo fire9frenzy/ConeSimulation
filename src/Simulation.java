@@ -169,6 +169,7 @@ public class Simulation
 						// need to write num of trees, cones produced, cones eaten, caches, seedlings year num
 					}
 				}
+				area.incrementAge();
 			}
 			writer.close();
 		}

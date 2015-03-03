@@ -8,7 +8,25 @@ public class Area
 	private int yearCones = 0;
 	private int conesEaten = 0;
 	private int amountOfTrees = 0;
+	private int iterations = 100;
+	private int yearSeeds = 0;
+	private double minSquirrel = 74.0;
+	private double maxSquirrel = 89.0;
+	private int coneTreshold = 1000;
+
+
 	//input the dimension in meter square
+	public Area(Area input)
+	{
+		metapop = input.metapop;
+		area = input.area;
+		dimension = input.dimension;
+		yearCones = input.yearCones;
+		conesEaten = input.conesEaten;
+		amountOfTrees = input.amountOfTrees;
+		iterations = input.iterations;
+		coneTreshold = input.coneTreshold;
+	}
 	public Area(int dimension, Metapop metapop)
 	{
 		this.dimension = dimension/((new Soil()).getDimension());
@@ -48,38 +66,44 @@ public class Area
 
 	public void Year(boolean mast)
 	{
+		int tempCones = 0;
+		int tempConesEaten = 0;
+		int seedlings = 0;
+		int caches = 0;
+		int seeds = 0;
+
+		for(int i = 0; i < iterations; i++)
+		{
+
+		}
+	}
+
+	public void runYear(boolean mast)
+	{
 		// incrementAge();
 		checkProgress();
 		yearCones = 0;
 		if(mast)
 		{	
 			for(int i = 0; i < dimension; i++)
+			{
+				for(int j = 0; j < dimension; j++)
+				{
+					if(area[i][j].containsPine())
 					{
-						for(int j = 0; j < dimension; j++)
-						{
-							if(area[i][j].containsPine())
-							{
-								area[i][j].produceCones(mast,metapop);
-								yearCones += area[i][j].amountCones();
-							}
-						}
+						area[i][j].produceCones(mast,metapop);
+						yearCones += area[i][j].amountCones();
 					}
+				}
+			}
 			double totalPercentage = percentange(45.0, 60.0)/100;
 			double squirellPercentage = percentange(40.0, (totalPercentage*100))/100;
 			conesEaten = (int)(yearCones * totalPercentage);
-			// System.out.println(yearCones);
-			int totalSeeds = 0;
-			// System.out.println(conesEaten);
-			int nutcrackerCones = (int)(conesEaten*(totalPercentage - squirellPercentage));
-			// System.out.println(nutcrackerCones);
-			for(int i =0; i < nutcrackerCones; i++)
+			if((yearCones-conesEaten) >= coneTreshold)
 			{
-				// System.out.println(seeds());	
-				totalSeeds += seeds(40,85);
+				nutCrackerBehavior(totalPercentage);
 			}
-			createCaches(totalSeeds);
-		// System.out.println(totalSeeds);
-
+			// System.out.println(yearCones);
 		}
 		else
 		{
@@ -94,30 +118,26 @@ public class Area
 					}
 				}
 			}
-			double totalPercentage = percentange(80.0, 90.0)/100;
-			double squirellPercentage = percentange(74.0, (totalPercentage*100))/100;
+			double totalPercentage = percentange(minSquirrel, maxSquirrel)/100;
 			conesEaten = (int)(yearCones * totalPercentage);
-			// System.out.println(yearCones);
-			int nutcrackerCones = (int)(conesEaten*(totalPercentage - squirellPercentage));
-			int totalSeeds = 0;
-			// System.out.println(nutcrackerCones);
-			for(int i =0; i < nutcrackerCones; i++)
+			if((yearCones-conesEaten) >= coneTreshold)
 			{
-				// System.out.println(seeds());	
-				totalSeeds += seeds(40,85);
+				nutCrackerBehavior(totalPercentage);
 			}
-			createCaches(totalSeeds);
-			// System.out.println(conesEaten);
 		}
-		// System.out.println("asd");
-		// System.out.println(getCacheCount());
 		eatCaches();
-		// System.out.println(getCacheCount());
-		incrementAge();
-		// System.out.println(getCacheCount());
+	}
 
-		// System.out.println("seeds"+totalSeeds);
-
+	private void nutCrackerBehavior(double squirrellPercentage)
+	{
+		int nutcrackerCones = (int)(yearCones*percentange(squirrellPercentage,90.0));
+		// System.out.println(nutcrackerCones);
+		for(int i =0; i < nutcrackerCones; i++)
+		{
+			// System.out.println(seeds());	
+			yearSeeds += seeds(40,85);
+		}
+		createCaches(yearSeeds);
 	}
 
 	private void createCaches(int seeds)
@@ -141,7 +161,7 @@ public class Area
 		}	
 	}
 
-	private void incrementAge()
+	public void incrementAge()
 	{
 		for(int i =0; i < area.length; i++)
 		{
@@ -172,6 +192,11 @@ public class Area
 				}
 			}
 		}
+	}
+
+	public int coneEscape()
+	{
+		return (yearCones-conesEaten);
 	}
 
 	public int[] conesProducePerTree()
