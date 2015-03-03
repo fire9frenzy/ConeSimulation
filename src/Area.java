@@ -66,6 +66,7 @@ public class Area
 
 	public void Year(boolean mast)
 	{
+		checkProgress();
 		int tempCones = 0;
 		int tempConesEaten = 0;
 		int seedlings = 0;
@@ -74,6 +75,7 @@ public class Area
 
 		for(int i = 0; i < iterations; i++)
 		{
+			// System.out.println("asda");
 			Area tempArea = new Area(area,metapop,dimension,yearCones,conesEaten,amountOfTrees, iterations, coneTreshold);
 			tempArea.runYear(mast);
 			tempCones += tempArea.getYearCones();
@@ -97,7 +99,6 @@ public class Area
 	public void runYear(boolean mast)
 	{
 		// incrementAge();
-		checkProgress();
 		yearCones = 0;
 		if(mast)
 		{	

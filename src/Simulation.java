@@ -213,20 +213,17 @@ public class Simulation
 		{
 			e.printStackTrace();
 		}
-<<<<<<< HEAD
-=======
 		if (runRscript)
 		{
 			try
 			{
-				Runtime.getRuntime().exec("Rscript ../ConeGraphing.R"); 
+				Runtime.getRuntime().exec("Rscript ../ConeGraphing.r"); 
 			}
 			catch(Exception e)
 			{
 				e.printStackTrace();
 			}
 		}
->>>>>>> cef531d9e3f906c84a97c6ba367651233072d126
 
 	}
 	public static void printHelp()
