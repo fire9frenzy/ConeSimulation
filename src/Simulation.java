@@ -17,8 +17,8 @@ public class Simulation
 		int density = 150;
 		String fileName = "Data.txt";
 		boolean yearlyInfo = true;
-		int squirrelLow = 80;
-		int squirrelHigh = 90;
+		double squirrelLow = 74;
+		double squirrelHigh = 89;
 		int seedsPerConeLow = 30;
 		int seedsPerConeHigh = 40;
 		int nutcrackerBoundry = 1000;
@@ -80,8 +80,8 @@ public class Simulation
 						}
 						break;
 					case "-s":
-						squirrelLow = Integer.valueOf(args[++i]);
-						squirrelHigh = Integer.valueOf(args[++i]);
+						squirrelLow = Double.valueOf(args[++i]);
+						squirrelHigh = Double.valueOf(args[++i]);
 						if (squirrelLow >= squirrelHigh)
 						{
 							System.out.println("Squirrel low bound must be lower then the high bound: using defualts");
@@ -122,6 +122,8 @@ public class Simulation
 
 		FileParser info = new FileParser("../Data/coneData.txt");
 		Area area = new Area(dimensions, info.getDataByMetaPop(location, maxCones));
+		area.setConeThreshold(nutcrackerBoundry);
+		area.setSquirrelMinMax(squirrelLow, squirrelHigh);
 		info.close();
 		area.setPineTrees(numOfTrees);
 		try
@@ -227,7 +229,7 @@ public class Simulation
 
 	}
 	public static void printHelp()
-	{
+	{System.out.println("-N int --default 100 \n   the boundry for nutcrackers appearing\n");
 		System.out.println("\nOption input\n   description\n");
 		System.out.println("-A int --default 1ha\n   the size of the simulated area in ha. squared.\n");
 		// System.out.println("-T int --default 150\n   the number of trees in the simulated area\n");
@@ -238,9 +240,9 @@ public class Simulation
 		System.out.println("-D int --default not set\n   three density in trees/ha^2\n");
 		System.out.println("-O str --default year\n   {tree|year} tree gives info about trees. year gives info about each year\n");
 		System.out.println("-F str --default Data.txt\n   file name including suffix\n");
-		System.out.println("-S int int --default 80 90\n   low then high boundry for how much squirrels eat\n");
+		System.out.println("-S int int --default 74 89\n   low then high boundry for how much squirrels eat\n");
 		System.out.println("-C int int --default 30 40\n   the boundry for seeds from each cone\n");
-		System.out.println("-N int --default 100 \n   the boundry for nutcrackers appearing\n");
+		System.out.println("-N int --default 1000 \n   the boundry for nutcrackers appearing\n");
 		System.out.println("-R \n   including -r will attempt to run rscripts to generate graphs\n");
 	}
 }
