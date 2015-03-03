@@ -4,6 +4,7 @@ public class Simulation
 {
 	public static void main(String args[])
 	{
+		boolean runRscript = false;
 		int dimensions = 100; 		// default 100m or 1 ha
 		int numOfTrees = 150;	// default fiddy
 		int minTreesPerHa = 50;
@@ -88,9 +89,12 @@ public class Simulation
 							squirrelHigh = 90;
 						}
 						break;
-						case "-n":
-							nutcrackerBoundry = Integer.valueOf(args[++i]);
-							break;
+					case "-n":
+						nutcrackerBoundry = Integer.valueOf(args[++i]);
+						break;
+					case "-R":
+						runRscript = true;
+						break;
 					case "-h":
 						printHelp();
 						System.exit(0);
@@ -109,7 +113,7 @@ public class Simulation
 		// print off current simulation parameters
 		// add pound
 		System.out.println("Simulation Parameters" + 
-							"\n  Area:      " + (dimensions / 1000) + "km^2" +
+							"\n  Area:      " + (dimensions / 100) + "km^2" +
 							"\n  Density:   " + density +
 							"\n  Years:     " + years + 
 							"\n  MastCycle: " + mastRate +
@@ -179,7 +183,7 @@ public class Simulation
 					// coneEscape
 					writer.print((area.getYearCones() - area.getYearConesEaten()) + "\t");
 					// coneEscapeDensity
-					writer.print((area.getYearCones() - area.getYearConesEaten()) / (dimensions / 1000) + "\t");
+					writer.print((area.getYearCones() - area.getYearConesEaten()) / (dimensions / 100) + "\t");
 					// coneEscapePercent
 					writer.print(1 - ((double)area.getYearConesEaten() / (double)area.getYearCones()) + "\t");
 					// caches
@@ -193,24 +197,12 @@ public class Simulation
 
 					for(int j = 0; j < area.getTreeCount(); ++j)						// should get end value from area object
 					{
-						// writer.println("\tsource\tyear\ttrees\tconesProd\tconesEaten\tcaches\tseedlings");
 						// index
 						writer.print((index++) + "\t");
 						// source
 						writer.print("Simulation" + "\t");
-						// year
-						// writer.print((i + 1) + "\t");
-						// num of trees
-						// writer.print(area.getTreeCount() + "\t");
 						// conesprod
 						writer.print(numbers[j] + "\n");
-						// cones eaten
-
-						// caches
-						// writer.print(area.getCacheCount() + "\t");
-						// seedlings
-						// writer.println(area.getSeedlingCount());
-						// need to write num of trees, cones produced, cones eaten, caches, seedlings year num
 					}
 				}
 				area.incrementAge();
@@ -221,13 +213,16 @@ public class Simulation
 		{
 			e.printStackTrace();
 		}
-		try
+		if (runRscript)
 		{
-			Runtime.getRuntime().exec("Rscript ../ConeGraphing.R"); 
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
+			try
+			{
+				Runtime.getRuntime().exec("Rscript ../ConeGraphing.R"); 
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
 
 	}
@@ -246,5 +241,6 @@ public class Simulation
 		System.out.println("-S int int --default 80 90\n   low then high boundry for how much squirrels eat\n");
 		System.out.println("-C int int --default 30 40\n   the boundry for seeds from each cone\n");
 		System.out.println("-N int --default 100 \n   the boundry for nutcrackers appearing\n");
+		System.out.println("-R \n   including -r will attempt to run rscripts to generate graphs\n");
 	}
 }
