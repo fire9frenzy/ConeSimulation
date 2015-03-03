@@ -350,4 +350,13 @@ public class Area
 	{
 		return conesEaten;
 	}
+	public void setConeThreshold(int val)
+	{
+		coneTreshold = val;
+	}
+	public void setSquirrelMinMax(double min, double max)
+	{
+		minSquirrel = min;
+		maxSquirrel = max;
+	}
 }
