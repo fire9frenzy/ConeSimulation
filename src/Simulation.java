@@ -30,7 +30,7 @@ public class Simulation
 				switch (args[i])
 				{
 					case "-a":
-						dimensions = 1000 * Integer.valueOf(args[++i]);
+						dimensions = 100 * Integer.valueOf(args[++i]);
 						break;
 					case "-t":
 						numOfTrees = Integer.valueOf(args[++i]);
@@ -109,12 +109,12 @@ public class Simulation
 			}
 		}
 		if (density > 0)
-			numOfTrees = (density * (dimensions / 1000));
+			numOfTrees = (density * (dimensions / 100));
 		// print off current simulation parameters
 		// add pound
 		System.out.println("Simulation Parameters" + 
-							"\n  Area:      " + (dimensions / 100) + "km^2" +
-							"\n  Density:   " + density +
+							"\n  Area:      " + (dimensions / 100) + "ha^2" +
+							"\n  Density:   " + density + "/ha^2" +
 							"\n  Years:     " + years + 
 							"\n  MastCycle: " + mastRate +
 							"\n  Location:  " + location +
@@ -229,13 +229,13 @@ public class Simulation
 	public static void printHelp()
 	{
 		System.out.println("\nOption input\n   description\n");
-		System.out.println("-A int --default 2km\n   the size of the simulated area in kilometers squared.\n");
+		System.out.println("-A int --default 1ha\n   the size of the simulated area in ha. squared.\n");
 		// System.out.println("-T int --default 150\n   the number of trees in the simulated area\n");
 		System.out.println("-L str --default PH\n   {PH|KP} determines which data to uses for cone production\n");
 		System.out.println("-M int --default no limit\n   the max number of cones a tree can produce\n");
 		System.out.println("-Y int --default 1\n   the total years the simulation will run for\n");
 		System.out.println("-I str int --default fixed 3\n   either 'fixed' or 'var' and the average number of years between mast years\n");
-		System.out.println("-D int --default not set\n   three density in trees/km^2\n");
+		System.out.println("-D int --default not set\n   three density in trees/ha^2\n");
 		System.out.println("-O str --default year\n   {tree|year} tree gives info about trees. year gives info about each year\n");
 		System.out.println("-F str --default Data.txt\n   file name including suffix\n");
 		System.out.println("-S int int --default 80 90\n   low then high boundry for how much squirrels eat\n");
