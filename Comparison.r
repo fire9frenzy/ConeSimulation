@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 # Import data from file
-data.Cones = read.table("src/Data.txt");
+data.Cones = read.table("src/treeDataKP.txt");
 
 # Draw boxplots to screen (X11)
 # boxplot(Roll~Algorithm, data=data.Roll);

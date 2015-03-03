@@ -4,8 +4,10 @@ public class Simulation
 {
 	public static void main(String args[])
 	{
-		int dimensions = 2000; 		// default 1Km
-		int numOfTrees = 150;		// default fiddy
+		int dimensions = 100; 		// default 100m or 1 ha
+		int numOfTrees = 150;	// default fiddy
+		int minTreesPerHa = 50;
+		int maxTreesPerHa = 500;
 		String location = "PH";		// default PH
 		int maxCones = 1000000000; 	// default no limit
 		int years = 60;			// default one year
@@ -211,6 +213,7 @@ public class Simulation
 						// need to write num of trees, cones produced, cones eaten, caches, seedlings year num
 					}
 				}
+				area.incrementAge();
 			}
 			writer.close();
 		}
@@ -218,6 +221,15 @@ public class Simulation
 		{
 			e.printStackTrace();
 		}
+		try
+		{
+			Runtime.getRuntime().exec("Rscript ../ConeGraphing.R"); 
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
 	}
 	public static void printHelp()
 	{
