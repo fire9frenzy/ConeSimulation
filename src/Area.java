@@ -16,16 +16,16 @@ public class Area
 
 
 	//input the dimension in meter square
-	public Area(Area input)
+	public Area(Soil[][] inputArea,Metapop inputMeta,int inputDimension,int inputYearCones,int inputConesEaten,int inputAmountOfTrees, int inputIterations, int inputConeTreshold)
 	{
-		metapop = input.metapop;
-		area = input.area;
-		dimension = input.dimension;
-		yearCones = input.yearCones;
-		conesEaten = input.conesEaten;
-		amountOfTrees = input.amountOfTrees;
-		iterations = input.iterations;
-		coneTreshold = input.coneTreshold;
+		metapop = inputMeta;
+		area = inputArea;
+		dimension = inputDimension;
+		yearCones = inputYearCones;
+		conesEaten = inputConesEaten;
+		amountOfTrees = inputAmountOfTrees;
+		iterations = inputIterations;
+		coneTreshold = inputConeTreshold;
 	}
 	public Area(int dimension, Metapop metapop)
 	{
@@ -69,14 +69,24 @@ public class Area
 		int tempCones = 0;
 		int tempConesEaten = 0;
 		int seedlings = 0;
-		int caches = 0;
-		int seeds = 0;
+		// int caches = 0;
+		// int seeds = 0;
 
 		for(int i = 0; i < iterations; i++)
 		{
-			// Area tempArea = Area(this);
+			Area tempArea = new Area(area,metapop,dimension,yearCones,conesEaten,amountOfTrees, iterations, coneTreshold);
+			tempArea.runYear(mast);
+			tempCones += tempArea.getYearCones();
+			tempConesEaten += tempArea.getYearConesEaten();
+			// seedlings += tempArea.getSeedlingCount();
+			// caches += tempArea.getCacheCount();
 		}
 
+		yearCones = (int)(tempCones/iterations);
+		conesEaten = (int)(tempConesEaten/iterations);
+		// caches = (int)(caches/iterations);
+		// seedlings = (int)(seedlings/iterations);
+		// if(seedlings <)
 		if((yearCones-conesEaten) >= coneTreshold)
 		{
 			nutCrackerBehavior((double)((double)(tempConesEaten)/(double)(tempCones)));
@@ -191,10 +201,6 @@ public class Area
 		}
 	}
 
-	public int coneEscape()
-	{
-		return (yearCones-conesEaten);
-	}
 
 	public int[] conesProducePerTree()
 	{
@@ -218,7 +224,7 @@ public class Area
 
 	public int conesLeft()
 	{
-		return yearCones;
+		return (yearCones-conesEaten);
 	}
 
 
