@@ -12,11 +12,14 @@ public class Area
 	private int yearSeeds = 0;
 	private double minSquirrel = 74.0;
 	private double maxSquirrel = 89.0;
+	private int minSeedsPerCone = 40;
+	private int maxSeedsPerCone = 80;
 	private int coneTreshold = 1000;
 
 
 	//input the dimension in meter square
-	public Area(Soil[][] inputArea,Metapop inputMeta,int inputDimension,int inputYearCones,int inputConesEaten,int inputAmountOfTrees, int inputIterations, int inputConeTreshold)
+	public Area(Soil[][] inputArea,Metapop inputMeta,int inputDimension,int inputYearCones,int inputConesEaten,int inputAmountOfTrees,
+				 int inputIterations, int inputConeTreshold, double inputMin, double inputMax)
 	{
 		metapop = inputMeta;
 		area = inputArea;
@@ -26,11 +29,18 @@ public class Area
 		amountOfTrees = inputAmountOfTrees;
 		iterations = inputIterations;
 		coneTreshold = inputConeTreshold;
+		minSquirrel = inputMin;
+		maxSquirrel = inputMax;
 	}
-	public Area(int dimension, Metapop metapop)
+	public Area(int dimension, Metapop metapop,double minSquirrel, double maxSquirrel, int coneTreshold, int minSeedsPerCone, int maxSeedsPerCone)
 	{
 		this.dimension = dimension/((new Soil()).getDimension());
 		area = new Soil[this.dimension][this.dimension];
+		this.minSquirrel = minSquirrel;
+		this.maxSquirrel = maxSquirrel;
+		this.minSeedsPerCone = minSeedsPerCone;
+		this.maxSeedsPerCone = maxSeedsPerCone;
+		this.coneTreshold = coneTreshold;
 		initiate();
 		this.metapop = metapop;
 	}
@@ -76,7 +86,8 @@ public class Area
 		for(int i = 0; i < iterations; i++)
 		{
 			// System.out.println("asda");
-			Area tempArea = new Area(area,metapop,dimension,yearCones,conesEaten,amountOfTrees, iterations, coneTreshold);
+			Area tempArea = new Area(area,metapop,dimension,yearCones,conesEaten,
+				amountOfTrees, iterations, coneTreshold,minSquirrel,maxSquirrel);
 			tempArea.runYear(mast);
 			tempCones += tempArea.getYearCones();
 			tempConesEaten += tempArea.getYearConesEaten();
@@ -143,7 +154,7 @@ public class Area
 		for(int i =0; i < nutcrackerCones; i++)
 		{
 			// System.out.println(seeds());	
-			yearSeeds += seeds(40,85);
+			yearSeeds += seeds(minSeedsPerCone,maxSeedsPerCone);
 		}
 		createCaches(yearSeeds);
 	}

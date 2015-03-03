@@ -1,7 +1,7 @@
 import java.util.*;
 public class Soil
 {
-	private final int dimension = 4; //1 meter per 1 meter
+	private final int dimension = 5; //1 meter per 1 meter
 
 	public Soil()
 	{

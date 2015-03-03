@@ -8,7 +8,7 @@ public class Simulation
 		int dimensions = 100; 		// default 100m or 1 ha
 		int numOfTrees = 150;	// default fiddy
 		int minTreesPerHa = 50;
-		int maxTreesPerHa = 500;
+		int maxTreesPerHa = 200;
 		String location = "PH";		// default PH
 		int maxCones = 1000000000; 	// default no limit
 		int years = 40;			// default one year
@@ -17,8 +17,8 @@ public class Simulation
 		int density = 150;
 		String fileName = "Data.txt";
 		boolean yearlyInfo = true;
-		int squirrelLow = 80;
-		int squirrelHigh = 90;
+		double squirrelLow = 74.0;
+		double squirrelHigh = 89.0;
 		int seedsPerConeLow = 30;
 		int seedsPerConeHigh = 40;
 		int nutcrackerBoundry = 1000;
@@ -80,8 +80,8 @@ public class Simulation
 						}
 						break;
 					case "-s":
-						squirrelLow = Integer.valueOf(args[++i]);
-						squirrelHigh = Integer.valueOf(args[++i]);
+						squirrelLow = Double.valueOf(args[++i]);
+						squirrelHigh = Double.valueOf(args[++i]);
 						if (squirrelLow >= squirrelHigh)
 						{
 							System.out.println("Squirrel low bound must be lower then the high bound: using defualts");
@@ -92,7 +92,7 @@ public class Simulation
 					case "-n":
 						nutcrackerBoundry = Integer.valueOf(args[++i]);
 						break;
-					case "-R":
+					case "-r":
 						runRscript = true;
 						break;
 					case "-h":
@@ -121,12 +121,12 @@ public class Simulation
 							"");
 
 		FileParser info = new FileParser("../Data/coneData.txt");
-		Area area = new Area(dimensions, info.getDataByMetaPop(location, maxCones));
+		Area area = new Area(dimensions, info.getDataByMetaPop(location, maxCones),squirrelLow,squirrelHigh,nutcrackerBoundry,seedsPerConeLow,seedsPerConeHigh);
 		info.close();
 		area.setPineTrees(numOfTrees);
 		try
 		{
-			PrintWriter writer = new PrintWriter(fileName, "UTF-8");
+			PrintWriter writer = new PrintWriter("../Data/"+fileName, "UTF-8");
 			if (yearlyInfo)
 				writer.println("source\tyear\tmastYear\ttrees\tconesProd\tconesEaten\tconeEscape\tconeEscapeDensity\tconeEscapePercent\tcaches\tseedlings");
 			else
@@ -217,11 +217,40 @@ public class Simulation
 		{
 			try
 			{
-				Runtime.getRuntime().exec("Rscript ../ConeGraphing.r"); 
+				PrintWriter writer = new PrintWriter("ConeGraphing.r", "UTF-8");
+				writer.println("data.Cones = read.table(\"../Data/"+fileName+"\");");
+				writer.println("#Draw boxplots to screen (X11)\n");
+				writer.println("# data.Cones\n");
+				writer.println("pdf(\"../Data/ConeEscape.pdf\")");
+				writer.println("plot(coneEscape~year,main=\"Cone Escape per Density vs Time\", data.Cones, xlab=\"Year\", ylab=\"Cone Escape per Density\")");
+				writer.println("dev.off()\n");
+
+				writer.println("pdf(\"../Data/ConeEscapeDensity.pdf\")");
+				writer.println("plot(coneEscapeDensity~year,main=\"Cone Escape of Zone per year\", data.Cones, xlab=\"Year\", ylab=\"Cone Escape per Tree Density\")");
+				writer.println("dev.off()\n");
+
+				writer.println("pdf(\"../Data/ConeProduce.pdf\")");
+				writer.println("plot(conesProd~year,main=\"Cone Produce of Zone per year\", data.Cones, xlab=\"Year\", ylab=\"Cone Produce\")");
+				writer.println("dev.off()\n");
+
+				writer.println("pdf(\"../Data/ConeEaten.pdf\")");
+				writer.println("plot(conesEaten~year,main=\"Cone Eaten of Zone per year\", data.Cones, xlab=\"Year\", ylab=\"Cone Eaten\")");
+				writer.println("dev.off()\n");
+
+				writer.println("pdf(\"../Data/ConeProd.pdf\")");
+				writer.println("plot(conesEaten~conesProd,main=\"Cones Produces Per Year vs Cones Eaten\", data.Cones, xlab=\"Cones Produce\", ylab=\"Cone Eaten\")");
+				writer.println("dev.off()\n");
+
+				writer.println("pdf(\"../Data/ConeEscapevsConeProd.pdf\")");
+				writer.println("plot(coneEscape~conesProd,main=\"Cone Escape vs Cones Produce\", data.Cones, xlab=\"Cone Produce\", ylab=\"Cone Escape\")");
+				writer.println("dev.off()\n");
+				writer.close();
+				Runtime.getRuntime().exec("Rscript ConeGraphing.r"); 
+				// System.out.println("Asdas");
 			}
-			catch(Exception e)
+			catch(IOException e)
 			{
-				e.printStackTrace();
+				System.out.println(e);
 			}
 		}
 
