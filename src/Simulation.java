@@ -256,7 +256,7 @@ public class Simulation
 
 	}
 	public static void printHelp()
-	{System.out.println("-N int --default 100 \n   the boundry for nutcrackers appearing\n");
+	{	
 		System.out.println("\nOption input\n   description\n");
 		System.out.println("-A int --default 1ha\n   the size of the simulated area in ha. squared.\n");
 		// System.out.println("-T int --default 150\n   the number of trees in the simulated area\n");
