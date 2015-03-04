@@ -2,6 +2,7 @@ import java.util.*;
 
 public class Area
 {
+
 	private Soil[][] area;
 	private Metapop metapop;
 	private int dimension;
@@ -18,6 +19,7 @@ public class Area
 
 
 	//input the dimension in meter square
+	//Area constructor, takes in the information needed simulate a year
 	public Area(Soil[][] inputArea,Metapop inputMeta,int inputDimension,int inputYearCones,int inputConesEaten,int inputAmountOfTrees,
 				 int inputIterations, int inputConeTreshold, double inputMin, double inputMax)
 	{
@@ -32,6 +34,8 @@ public class Area
 		minSquirrel = inputMin;
 		maxSquirrel = inputMax;
 	}
+
+	//Area constructor use to simulate the run of one single year several times
 	public Area(int dimension, Metapop metapop,double minSquirrel, double maxSquirrel, int coneTreshold, int minSeedsPerCone, int maxSeedsPerCone)
 	{
 		this.dimension = dimension/((new Soil()).getDimension());
@@ -45,6 +49,7 @@ public class Area
 		this.metapop = metapop;
 	}
 
+	//Function use to initiate the area array with new soil
 	private void initiate()
 	{
 		for(int i = 0; i < dimension; i++)
@@ -56,6 +61,7 @@ public class Area
 		}
 	}
 
+	//public function use to set the given amount of pine trees into the array, the trees are placed randomly
 	public void setPineTrees(int amount)
 	{
 		amountOfTrees = amount;
@@ -74,6 +80,8 @@ public class Area
 		}
 	}
 
+	//public function use to simulate one year of time in the area
+	//takes in a boolean value to decide whether or not the year is a mast year
 	public void Year(boolean mast)
 	{
 		checkProgress();
@@ -107,6 +115,8 @@ public class Area
 		eatCaches();
 	}
 
+	//function for cone production and other for a year in a given area
+	//takes in a boolean value to decide whether or not is a mast year
 	public void runYear(boolean mast)
 	{
 		// incrementAge();
@@ -147,6 +157,8 @@ public class Area
 		}
 	}
 
+	//private function use to simulate the nutcracker behavior when taking seeds and spreading them
+	//takes in the percentage of cones taken by the squirrells to calculate the amount of cones left for the nutcrackers
 	private void nutCrackerBehavior(double squirrellPercentage)
 	{
 		int nutcrackerCones = (int)(yearCones*percentange(squirrellPercentage,90.0));
@@ -159,6 +171,8 @@ public class Area
 		createCaches(yearSeeds);
 	}
 
+	//function use to simulate the creation of caches by the nutcrackers after they've collected the seeds
+	//takes in how many seeds are to be divided into caches
 	private void createCaches(int seeds)
 	{
 		Random random = new Random();
@@ -180,6 +194,7 @@ public class Area
 		}	
 	}
 
+	//public function use to increment the age of all valid areas within the array
 	public void incrementAge()
 	{
 		for(int i =0; i < area.length; i++)
@@ -194,6 +209,7 @@ public class Area
 		}
 	}
 
+	//function used to simulate the nutcrackers behavior when eating caches
 	private void eatCaches()
 	{
 		for(int i =0; i < area.length; i++)
@@ -213,7 +229,8 @@ public class Area
 		}
 	}
 
-
+	//public function use to return the amount of cones produce per tree
+	//returns each value in an integer array
 	public int[] conesProducePerTree()
 	{
 		int cones[] = new int[getTreeCount()];
@@ -233,25 +250,27 @@ public class Area
 	}
 
 
-
+	//returns how many cones were left on a given year
 	public int conesLeft()
 	{
 		return (yearCones-conesEaten);
 	}
 
-
+	//function use to randomly select a percentage within a range
 	private double percentange(double min, double max)
 	{
 		Random random = new Random();
 		return (min + (max - min) * random.nextDouble());
 	}
 
+	//function used to randomly calculate the amunt of seeds within a given range
 	private int seeds(int min, int max)
 	{
 		Random random = new Random();
 		return (random.nextInt((max - min) + 1) + min);
 	}
 
+	//function will print a representation of the area
 	public String toString()
 	{
 		String temp = "dimension for each square is"+(new Soil()).dimension();
@@ -269,6 +288,11 @@ public class Area
 		return temp;
 	}
 
+	//function will check the progress of the area
+	//making changes as they are necessary
+	//will change cache or seedling to soil
+	//soil to cache
+	//cache to seedling
 	private void checkProgress()
 	{
 		for(int i =0; i < area.length; i++)
@@ -309,6 +333,7 @@ public class Area
 		}
 	}
 
+	//function will return the amount of trees present in the area
 	public int getTreeCount()
 	{
 		int count = 0;
@@ -324,6 +349,8 @@ public class Area
 		}
 		return count;
 	}
+
+	//function will return the amount of caches currently in the area
 	public int getCacheCount()
 	{
 		int count = 0;
@@ -339,6 +366,8 @@ public class Area
 		}
 		return count;
 	}
+
+	//function will return the amount of current seedlings in the area
 	public int getSeedlingCount()
 	{
 		int count = 0;
@@ -354,18 +383,26 @@ public class Area
 		}
 		return count;
 	}
+
+	//function will return the total amount of cones created in the area for a given year
 	public int getYearCones()
 	{
 		return yearCones;
 	}
+
+	//function will return the amount of cones eaten in an area in a given year
 	public int getYearConesEaten()
 	{
 		return conesEaten;
 	}
+
+	//function set the cone treshold for nutcracker attraction to the value pass in as a parameter
 	public void setConeThreshold(int val)
 	{
 		coneTreshold = val;
 	}
+
+	//function will set the min and max percentage of squirrel consumption to the given parameters
 	public void setSquirrelMinMax(double min, double max)
 	{
 		minSquirrel = min;
