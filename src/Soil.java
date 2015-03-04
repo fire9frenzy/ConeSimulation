@@ -1,6 +1,10 @@
 import java.util.*;
+
+//parent constructor for the following classes:
+//LimberPine,Seedling and Cache
 public class Soil
 {
+	//dimention of the soil is 5m by 5m
 	private final int dimension = 5; //1 meter per 1 meter
 
 	public Soil()
