@@ -1,4 +1,4 @@
-<project name="ConeSim" default="compile" basedir=".">
+<project name="ConeSim" default="jar" basedir=".">
 	<target name="clean" description="Cleans up project (Removes old build files)">
 		<delete dir="build"/>
 		<delete file="manifest.txt"/>
@@ -11,7 +11,7 @@
 		<mkdir dir="build/jar"/>
 		<jar destfile="build/jar/ConeProductionSim.jar" basedir="build/classes">
 			<manifest>
-				<attribute name="Main-Class" value="FileParser"/>
+				<attribute name="Main-Class" value="Simulation"/>
 			</manifest>
 		</jar>
 	</target>

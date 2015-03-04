@@ -113,20 +113,20 @@ public class Simulation
 		// print off current simulation parameters
 		// add pound
 		System.out.println("Simulation Parameters" + 
-							"\n  Area:      " + (dimensions / 100) + "ha^2" +
-							"\n  Density:   " + density + "/ha^2" +
+							"\n  Area:      " + (dimensions / 100) + "ha" +
+							"\n  Density:   " + density + "/ha" +
 							"\n  Years:     " + years + 
 							"\n  MastCycle: " + mastRate +
 							"\n  Location:  " + location +
 							"");
 
-		FileParser info = new FileParser("../Data/coneData.txt");
+		FileParser info = new FileParser("../../Data/coneData.txt");
 		Area area = new Area(dimensions, info.getDataByMetaPop(location, maxCones),squirrelLow,squirrelHigh,nutcrackerBoundry,seedsPerConeLow,seedsPerConeHigh);
 		info.close();
 		area.setPineTrees(numOfTrees);
 		try
 		{
-			PrintWriter writer = new PrintWriter("../Data/"+fileName, "UTF-8");
+			PrintWriter writer = new PrintWriter("../../Data/"+fileName, "UTF-8");
 			if (yearlyInfo)
 				writer.println("source\tyear\tmastYear\ttrees\tconesProd\tconesEaten\tconeEscape\tconeEscapeDensity\tconeEscapePercent\tcaches\tseedlings");
 			else
@@ -217,35 +217,35 @@ public class Simulation
 		{
 			try
 			{
-				PrintWriter writer = new PrintWriter("ConeGraphing.r", "UTF-8");
-				writer.println("data.Cones = read.table(\"../Data/"+fileName+"\");");
+				PrintWriter writer = new PrintWriter("../../Data/ConeGraphing.r", "UTF-8");
+				writer.println("data.Cones = read.table(\"../../Data/"+fileName+"\");");
 				writer.println("#Draw boxplots to screen (X11)\n");
 				writer.println("# data.Cones\n");
-				writer.println("pdf(\"../Data/ConeEscape.pdf\")");
+				writer.println("pdf(\"../../Data/ConeEscape.pdf\")");
 				writer.println("plot(coneEscape~year,main=\"Cone Escape per Density vs Time\", data.Cones, xlab=\"Year\", ylab=\"Cone Escape per Density\")");
 				writer.println("dev.off()\n");
 
-				writer.println("pdf(\"../Data/ConeEscapeDensity.pdf\")");
+				writer.println("pdf(\"../../Data/ConeEscapeDensity.pdf\")");
 				writer.println("plot(coneEscapeDensity~year,main=\"Cone Escape of Zone per year\", data.Cones, xlab=\"Year\", ylab=\"Cone Escape per Tree Density\")");
 				writer.println("dev.off()\n");
 
-				writer.println("pdf(\"../Data/ConeProduce.pdf\")");
+				writer.println("pdf(\"../../Data/ConeProduce.pdf\")");
 				writer.println("plot(conesProd~year,main=\"Cone Produce of Zone per year\", data.Cones, xlab=\"Year\", ylab=\"Cone Produce\")");
 				writer.println("dev.off()\n");
 
-				writer.println("pdf(\"../Data/ConeEaten.pdf\")");
+				writer.println("pdf(\"../../Data/ConeEaten.pdf\")");
 				writer.println("plot(conesEaten~year,main=\"Cone Eaten of Zone per year\", data.Cones, xlab=\"Year\", ylab=\"Cone Eaten\")");
 				writer.println("dev.off()\n");
 
-				writer.println("pdf(\"../Data/ConeProd.pdf\")");
+				writer.println("pdf(\"../../Data/ConeProd.pdf\")");
 				writer.println("plot(conesEaten~conesProd,main=\"Cones Produces Per Year vs Cones Eaten\", data.Cones, xlab=\"Cones Produce\", ylab=\"Cone Eaten\")");
 				writer.println("dev.off()\n");
 
-				writer.println("pdf(\"../Data/ConeEscapevsConeProd.pdf\")");
+				writer.println("pdf(\"../../Data/ConeEscapevsConeProd.pdf\")");
 				writer.println("plot(coneEscape~conesProd,main=\"Cone Escape vs Cones Produce\", data.Cones, xlab=\"Cone Produce\", ylab=\"Cone Escape\")");
 				writer.println("dev.off()\n");
 				writer.close();
-				Runtime.getRuntime().exec("Rscript ConeGraphing.r"); 
+				Runtime.getRuntime().exec("Rscript ../../Data/ConeGraphing.r"); 
 				// System.out.println("Asdas");
 			}
 			catch(IOException e)
