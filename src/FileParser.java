@@ -16,6 +16,7 @@ public class FileParser
 			System.out.println("File not found");
 		}
 	}
+	// gets tree production by location specified by name limits cone production to max cones
 	public Metapop getDataByMetaPop(String name, int maxCones)
 	{
 		Metapop data = new Metapop(name);
@@ -48,16 +49,4 @@ public class FileParser
 	{
 		sc.close();
 	}
-	// public static void main(String[] args)
-	// {
-	// 	if (args.length == 1)
-	// 	{
-	// 		new FileParser(args[0]);
-	// 	}
-	// 	else
-	// 	{
-	// 		FileParser t = new FileParser("../../Data/coneData.txt");
-	// 		t.getDataByMetaPop("PH");
-	// 	}
-	// }
 }
