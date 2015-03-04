@@ -4,8 +4,9 @@ public class Simulation
 {
 	public static void main(String args[])
 	{
+		int ha = 100; // one hactre is 100 my 100 meters
 		boolean runRscript = false;
-		int dimensions = 100; 		// default 100m or 1 ha
+		int dimensions = ha; 		// default 100m or 1 ha
 		int numOfTrees = 150;	// default fiddy
 		int minTreesPerHa = 50;
 		int maxTreesPerHa = 200;
@@ -30,10 +31,16 @@ public class Simulation
 				switch (args[i])
 				{
 					case "-a":
-						dimensions = 100 * Integer.valueOf(args[++i]);
+						if (i + 1 < args.length)
+							dimensions = ha * Integer.valueOf(args[++i]);
+						else
+							System.out.println("Error parsing inputs. Missing parameter for " + args[i] + " using defaults");
 						break;
 					case "-t":
-						numOfTrees = Integer.valueOf(args[++i]);
+						if (i + 1 < args.length)
+							numOfTrees = Integer.valueOf(args[++i]);
+						else
+							System.out.println("Error parsing inputs. Missing parameter for " + args[i] + " using defaults");
 						break;
 					case "-l":
 						if (!args[i + 1].equals("KP") && !args[i + 1].equals("PH"))
@@ -42,58 +49,101 @@ public class Simulation
 							location = "KP";
 						break;
 					case "-m":
-						maxCones = Integer.valueOf(args[++i]);
+						if (i + 1 < args.length)
+							maxCones = Integer.valueOf(args[++i]);
+						else
+							System.out.println("Error parsing inputs. Missing parameter for " + args[i] + " using defaults");
 						break;
 					case "-y":
-						years = Integer.valueOf(args[++i]);
-						// System.out.println("Years: " + years);
+						if (i + 1 < args.length)
+							years = Integer.valueOf(args[++i]);
+						else
+							System.out.println("Error parsing inputs. Missing parameter for " + args[i] + " using defaults");
 						break;
 					case "-i":
-						if (!args[i + 1].equals("fixed") && !args[i + 1].equals("var"))
-							System.out.println("Mast year variability unknown: using defualts");
-						else if(args[++i].equals("var"))
-							variable = true;
-						mastRate = Integer.valueOf(args[++i]);
+						if (i + 2 < args.length)
+						{
+							if (!args[i + 1].equals("fixed") && !args[i + 1].equals("var"))
+								System.out.println("Mast year variability unknown: using defualts");
+							else if(args[++i].equals("var"))
+								variable = true;
+							mastRate = Integer.valueOf(args[++i]);
+						}
+						else
+							System.out.println("Error parsing inputs. Missing parameter for " + args[i] + " using defaults");
 						break;
 					case "-d":
-						density = Integer.valueOf(args[++i]);
+						if (i + 1 < args.length)
+						{
+							density = Integer.valueOf(args[++i]);
+							if (density > 500 || density < 50)
+							{
+								System.out.println("Density must be between 50 and 500 trees per ha.");
+							}
+						}
+						else
+							System.out.println("Error parsing inputs. Missing parameter for " + args[i] + " using defaults");
 						break;
 					case "-o":
-						if (args[i + 1].equals("year"))
-							yearlyInfo = true;
-						else if (args[++i].equals("tree"))
-							yearlyInfo = false;
+						if (i + 1 < args.length)
+						{
+							if (args[i + 1].equals("year"))
+								yearlyInfo = true;
+							else if (args[++i].equals("tree"))
+								yearlyInfo = false;
+							else
+								System.out.println("Unknown output type: using defualts");
+						}
 						else
-							System.out.println("Unknown output type: using defualts");
+							System.out.println("Error parsing inputs. Missing parameter for " + args[i] + " using defaults");
 						break;
 					case "-f":
-						fileName = args[++i];
+						if (i + 1 < args.length)
+							fileName = args[++i];
+						else
+							System.out.println("Error parsing inputs. Missing parameter for " + args[i] + " using defaults");
 						break;
 					case "-c":
-						seedsPerConeLow = Integer.valueOf(args[++i]);
-						seedsPerConeHigh = Integer.valueOf(args[++i]);
-						if (squirrelLow >= squirrelHigh)
+						if (i + 2 < args.length)
 						{
-							System.out.println("ConePerSeed low bound must be lower then the high bound: using defualts");
-							seedsPerConeLow = 30;
-							seedsPerConeHigh = 40;
+							seedsPerConeLow = Integer.valueOf(args[++i]);
+							seedsPerConeHigh = Integer.valueOf(args[++i]);
+							if (squirrelLow >= squirrelHigh)
+							{
+								System.out.println("ConePerSeed low bound must be lower then the high bound: using defualts");
+								seedsPerConeLow = 30;
+								seedsPerConeHigh = 40;
+							}
 						}
+						else
+							System.out.println("Error parsing inputs. Missing parameter for " + args[i] + " using defaults");
 						break;
 					case "-s":
-						squirrelLow = Double.valueOf(args[++i]);
-						squirrelHigh = Double.valueOf(args[++i]);
-						if (squirrelLow >= squirrelHigh)
+						if (i + 2 < args.length)
 						{
-							System.out.println("Squirrel low bound must be lower then the high bound: using defualts");
-							squirrelLow = 80;
-							squirrelHigh = 90;
+							squirrelLow = Double.valueOf(args[++i]);
+							squirrelHigh = Double.valueOf(args[++i]);
+							if (squirrelLow >= squirrelHigh)
+							{
+								System.out.println("Squirrel low bound must be lower then the high bound: using defualts");
+								squirrelLow = 80;
+								squirrelHigh = 90;
+							}
 						}
+						else
+							System.out.println("Error parsing inputs. Missing parameter for " + args[i] + " using defaults");
 						break;
 					case "-n":
-						nutcrackerBoundry = Integer.valueOf(args[++i]);
+						if (i + 1 < args.length)
+							nutcrackerBoundry = Integer.valueOf(args[++i]);
+						else
+							System.out.println("Error parsing inputs. Missing parameter for " + args[i] + " using defaults");
 						break;
 					case "-r":
-						runRscript = true;
+						if (i + 1 < args.length)
+							runRscript = true;
+						else
+							System.out.println("Error parsing inputs. Missing parameter for " + args[i] + " using defaults");
 						break;
 					case "-h":
 						printHelp();
@@ -109,7 +159,7 @@ public class Simulation
 			}
 		}
 		if (density > 0)
-			numOfTrees = (density * (dimensions / 100));
+			numOfTrees = (density * (dimensions / ha));
 		// print off current simulation parameters
 		// add pound
 		System.out.println("Simulation Parameters" + 
@@ -128,7 +178,7 @@ public class Simulation
 		{
 			PrintWriter writer = new PrintWriter("../../Data/"+fileName, "UTF-8");
 			if (yearlyInfo)
-				writer.println("source\tyear\tmastYear\ttrees\tconesProd\tconesEaten\tconeEscape\tconeEscapeDensity\tconeEscapePercent\tcaches\tseedlings");
+				writer.println("source\tyear\tmastYear\ttrees\tconesProd\tconesEaten\tconeEscape\tconeEscapeDensity\tconeEscapeThreshold\tcaches\tseedlings");
 			else
 				writer.println("source\tconesProd");
 			int lastMastYear = 0;
@@ -183,9 +233,11 @@ public class Simulation
 					// coneEscape
 					writer.print((area.getYearCones() - area.getYearConesEaten()) + "\t");
 					// coneEscapeDensity
-					writer.print((area.getYearCones() - area.getYearConesEaten()) / (dimensions / 100) + "\t");
-					// coneEscapePercent
-					writer.print(1 - ((double)area.getYearConesEaten() / (double)area.getYearCones()) + "\t");
+					writer.print((area.getYearCones() - area.getYearConesEaten()) / (dimensions / ha) + "\t");
+					// // coneEscapePercent
+					// writer.print(1 - ((double)area.getYearConesEaten() / (double)area.getYearCones()) + "\t");
+					// coneEscapeThreshold
+					writer.print(nutcrackerBoundry + "\t");
 					// caches
 					writer.print(area.getCacheCount() + "\t");
 					// seedlings
@@ -264,7 +316,7 @@ public class Simulation
 		System.out.println("-M int --default no limit\n   the max number of cones a tree can produce\n");
 		System.out.println("-Y int --default 1\n   the total years the simulation will run for\n");
 		System.out.println("-I str int --default fixed 3\n   either 'fixed' or 'var' and the average number of years between mast years\n");
-		System.out.println("-D int --default not set\n   three density in trees/ha^2\n");
+		System.out.println("-D int --default 150\n    density in trees/ha must be between 50 and 500\n");
 		System.out.println("-O str --default year\n   {tree|year} tree gives info about trees. year gives info about each year\n");
 		System.out.println("-F str --default Data.txt\n   file name including suffix\n");
 		System.out.println("-S int int --default 74 89\n   low then high boundry for how much squirrels eat\n");
